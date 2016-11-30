@@ -59,7 +59,8 @@
 					//console.log(response.data[i].name);                                   
 					document.getElementById('status').innerHTML += response.data[i].name + '<br />' ;
 					document.getElementById('status').innerHTML += response.data[i].end_time + '<br />';
-            }
+            	}
+            }	
 		}
 	</script>
 
