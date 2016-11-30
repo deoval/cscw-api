@@ -50,9 +50,16 @@
 		
 		// getting basic user info
 		function getInfo() {
-			FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
+			/*FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
 				document.getElementById('status').innerHTML = response.id;
-			});
+			});*/
+			FB.api('/search?q=UFRJ&type=event', 'GET', {}, function(response) {
+                for (var i in response.data){
+					console.log(response.data[i].end_time < Date());
+					//console.log(response.data[i].name);                                   
+					document.getElementById('status').innerHTML += response.data[i].name + '<br />' ;
+					document.getElementById('status').innerHTML += response.data[i].end_time + '<br />';
+            }
 		}
 	</script>
 
