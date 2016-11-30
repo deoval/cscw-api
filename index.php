@@ -55,12 +55,12 @@
 			});*/
 			FB.api('/search?q=UFRJ&type=event', 'GET', {}, function(response) {
                 for (var i in response.data){
-					console.log(response.data[i].end_time < Date());
+					//console.log(response.data[i].end_time < Date());
 					//console.log(response.data[i].name);                                   
 					document.getElementById('status').innerHTML += response.data[i].name + '<br />' ;
 					document.getElementById('status').innerHTML += response.data[i].end_time + '<br />';
             	}
-            }	
+            });	
 		}
 	</script>
 
