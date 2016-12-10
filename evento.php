@@ -1,8 +1,12 @@
 <?php 
 $json = file_get_contents('file.json');
-//$json = utf8_encode($json); 
+//$json = utf8_encode($json);
+header('Content-Type: application/json; charset=utf-8');
+//echo $json;
 $aux = json_decode($json, false, 512, JSON_UNESCAPED_UNICODE);
-echo json_encode($aux, JSON_UNESCAPED_UNICODE);
+//var_dump($aux);
+//echo $aux;
+echo json_encode($aux);//, JSON_UNESCAPED_UNICODE);
 
 ?>
 <!DOCTYPE html>
