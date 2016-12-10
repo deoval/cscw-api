@@ -26,7 +26,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json(['_token'=>csrf_token()]);
     }
 
     /**
@@ -37,7 +37,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json(['message'=>'tudo ok']);
     }
 
     /**

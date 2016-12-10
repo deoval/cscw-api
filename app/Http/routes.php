@@ -14,4 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('/evento', 'EventoController');
+
+Route::group(['prefix'=>'api', 'middleware'=>'cors'], function () {
+	Route::resource('/evento', 'EventoController');
+});
