@@ -16,8 +16,8 @@ class UserEventController extends Controller
     public function getUserEvents(Request $request)
     {
         //$user_id = $request->get('user_id');
-        return response()->json(['req'=>$request]);
         $access_token = $request->get('access_token');
+        return $access_token;
         //$url = '/' . $user_id . '/events';
         $url = '/me/events';
         dd($url);
