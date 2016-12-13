@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class EventoController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos = \App\Evento::all();
-        return response()->json(['data'=>$eventos]);
+        $eventos = \App\Event::all();
+        return response()->json($eventos);
     }
 
     /**
