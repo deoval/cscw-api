@@ -15,6 +15,9 @@ class Cors
      */
     public function handle($request, Closure $next)
     {   
+        if (!(isset($_SERVER['HTTP_ORIGIN']))) {
+            return $next($request);
+        }
         $headers = [
             'Access-Control-Allow-Origin'      => $_SERVER['HTTP_ORIGIN'],
             // CORS doesn't accept Access-Control-Allow-Origin = * for security reasons
