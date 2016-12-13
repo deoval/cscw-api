@@ -17,10 +17,10 @@ class UserEventController extends Controller
     {
         //$user_id = $request->get('user_id');
         $access_token = $request->get('access_token');
-        return $access_token;
+        //return $access_token;
         //$url = '/' . $user_id . '/events';
         $url = '/me/events';
-        dd($url);
+        //dd($url);
         $fb = new \Facebook\Facebook(['app_id' => '1379982378719884',
 		  'app_secret' => '6de34ab5bb6310b76e57cb18d677643b',
 		  'default_graph_version' => 'v2.8',
