@@ -18,4 +18,5 @@ Route::get('/', function () {
 Route::group(['prefix'=>'api', 'middleware'=>'cors'], function () {
 	Route::resource('/event', 'EventController');
 	Route::post('/user/event', 'UserEventController@getUserEvents');
+	Route::post('/user/event/checkin', 'UserEventController@setUserEventCheckin');
 });

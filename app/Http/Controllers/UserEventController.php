@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Event;
+use App\Place;
+use App\Checkin;
+
 class UserEventController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of user's events .
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,5 +34,24 @@ class UserEventController extends Controller
 		$arrayResult = json_decode($response->getBody(), true);
 		
 		return response()->json(['data'=>$arrayResult['data']]);		
+    }
+
+    /**
+     * Display a listing of user's events .
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function setUserEventCheckin(Request $request)
+    {
+		$facebook_event_id = $request->get('facebook_event_id');		
+		$facebook_user_id = $request->get('facebook_user_id');
+        $event = Event::where('facebook_event_id', '=', $facebook_event_id)->firstOrFail();
+        
+        $data = ['facebook_user_id' => $facebook_user_id,
+        			'facebook_event_id' => $facebook_event_id,
+        			'event_id' => $event->id];
+        $checkin = Checkin::create($data);
+
+        return response()->json(['data'=>$checkin]);
     }
 }
