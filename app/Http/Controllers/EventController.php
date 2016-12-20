@@ -43,7 +43,7 @@ class EventController extends Controller
         $facebook_event_id = $request->get('facebook_event_id');
         $event = Event::where('facebook_event_id', '=', $facebook_event_id)->first();
         if (!(is_null($event))) {
-            return response()->json(['message'=>'tudo ok', 'data'=>$event]);
+            return response()->json(['message'=>'Evento ja cadastrado', 'data'=>$event], 409);
         }
         
         $place_id = $request->get('facebook_place_id');
