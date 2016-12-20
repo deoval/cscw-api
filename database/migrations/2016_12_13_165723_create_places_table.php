@@ -16,13 +16,13 @@ class CreatePlacesTable extends Migration
             $table->bigIncrements('id');
             $table->string('facebook_place_id')->unique();
             $table->string('name');
-            $table->string('city');
-            $table->string('country');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->string('state');
-            $table->string('street');
-            $table->string('zip');
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('state')->nullable();
+            $table->string('street')->nullable();
+            $table->string('zip')->nullable();
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreatePlacesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('places');
     }
 }

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Event;
+use App\Place;
+
 class EventController extends Controller
 {
     /**
@@ -15,7 +18,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $eventos = \App\Event::all();
+        $eventos = Event::all();
         return response()->json($eventos);
     }
 
@@ -26,7 +29,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return response()->json(['_token'=>csrf_token()]);
+        //return response()->json(['_token'=>csrf_token()]);
     }
 
     /**
@@ -37,7 +40,27 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(['message'=>'tudo ok']);
+        $facebook_event_id = $request->get('facebook_event_id');
+        $event = Event::where('facebook_event_id', '=', $facebook_event_id)->first();
+        if (!(is_null($event))) {
+            return response()->json(['message'=>'tudo ok', 'data'=>$event]);
+        }
+        
+        $place_id = $request->get('facebook_place_id');
+        $place = Place::where('facebook_place_id', '=', $place_id)->first();
+        if (is_null($place)){
+            $place = $request->only('facebook_place_id', 'place_name','city', 'country',
+                                    'latitude','longitude','state','street','zip');
+            $place['name'] = $place['place_name'];
+            unset($place['place_name']);
+            $place = Place::create($place);
+        }
+
+        $event = $request->only('facebook_event_id', 'name', 'picture_url', 'description',
+                                'start_time', 'end_time');
+        $event['place_id'] = $place->id;
+        $event = Event::create($event);
+        return response()->json(['message'=>'tudo ok', 'data'=>$event]);
     }
 
     /**

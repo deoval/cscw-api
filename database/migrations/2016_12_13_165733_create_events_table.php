@@ -16,8 +16,8 @@ class CreateEventsTable extends Migration
             $table->bigIncrements('id');
             $table->string('facebook_event_id')->unique();
             $table->string('name');
-            $table->string('picture_url');
-            $table->text('description');
+            $table->string('picture_url')->nullable();
+            $table->text('description')->nullable();
             $table->datetime('start_time');
             $table->datetime('end_time');
             $table->bigInteger('place_id')->unsigned();
@@ -33,6 +33,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('events');
     }
 }
