@@ -27,7 +27,8 @@ class UserEventController extends Controller
 		]);
 		$response = $fb->get($url, $access_token);
 
-		$arrayResult = json_decode($response->getBody(), true);
+		$arrayResult = $response->getDecodedBody();
+		//$arrayResult = json_decode($response->getBody(), true);
 
 		$i = 0;
 		foreach ($arrayResult['data'] as $event) {
@@ -57,5 +58,43 @@ class UserEventController extends Controller
         $checkin = Checkin::create($data);
 
         return response()->json(['data'=>$checkin]);
+    }
+
+    public function getUserFriendsCheckin(Request $request){
+    	$access_token = $request->get('access_token');
+    	$event_id = $request->get('event_id');
+
+    	$fb = new \Facebook\Facebook([
+		  'app_id' => '1379982378719884',
+		  'app_secret' => '6de34ab5bb6310b76e57cb18d677643b',
+		  'default_graph_version' => 'v2.8',
+		  ]);
+
+		// Since all the requests will be sent on behalf of the same user,
+		// we'll set the default fallback access token here.
+		$fb->setDefaultAccessToken($access_token);
+
+		$event = Event::with('checkins')->findOrFail($event_id);
+
+		$i = 0;
+		$batch= array();
+		foreach ($event->checkins as $checkin) {
+			$url = '/me/friends/'.$checkin->facebook_user_id;
+			$batch[$i] = $fb->request('GET', $url);
+			$i++;
+		}	
+	    
+		$responses = $fb->sendBatchRequest($batch);
+
+		$i = 0;
+		$friends = array();
+		foreach ($responses as $key => $response) {
+			$aux = $response->getDecodedBody();
+			if (!(is_null($aux['data']))) {
+				$friends[$i] = $aux['data'];
+				$i++;					
+			}
+		}
+		return response()->json(['data'=>$friends]);
     }
 }
